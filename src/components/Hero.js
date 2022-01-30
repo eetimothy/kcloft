@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button } from './Button';
+import { Link } from 'react-router-dom'
 import './Hero.css'
 import '../App.css'
 
@@ -10,6 +11,7 @@ function Hero() {
             <h1>DREAM HOME AWAITS</h1>
             <p>What are you waiting for?</p>
             <div className="hero-btns">
+                <Link to="/contact">
                 <Button 
                 className='btns' 
                 buttonStyle='btn--outline'
@@ -17,6 +19,9 @@ function Hero() {
                 >
                     GET QUOTE
                     </Button>
+                    </Link>
+
+                    <Link to="/projects">
                     <Button 
                 className='btns' 
                 buttonStyle='btn--primary'
@@ -24,6 +29,7 @@ function Hero() {
                 >
                     VIEW PROJECTS <i className='far fa-play-circle' />
                     </Button>
+                    </Link>
             </div>
         </div>
     )

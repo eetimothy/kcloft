@@ -1,23 +1,21 @@
 import React, { useState, useEffect } from 'react';
 import './Cards.css';
-import CardItem from './CardItem';
-import { projColRef } from '../firebase';
+import AccessoryCardItem from './AccessoryCardItem';
+import { accessoriesColRef } from '../firebase';
 import { onSnapshot } from 'firebase/firestore'
 
 
-function Cards() {
-  const [projects, setProjects] = useState([])
+function CardsAccessory() {
+  const [accessories, setAccessories] = useState([])
 
   useEffect(() => {
  //realtime collection data: onSnapshot
- onSnapshot(projColRef, (snapshot) => {
-  let proj = []
+ onSnapshot(accessoriesColRef, (snapshot) => {
+  let acc = []
   snapshot.docs.map((doc) => {
-      return proj.push({ ...doc.data(), id: doc.id })
+      return acc.push({ ...doc.data(), id: doc.id })
   })
-  console.log(proj)
-  setProjects(proj)
-
+  setAccessories(acc)
 })
   }, [])
 
@@ -25,7 +23,7 @@ function Cards() {
 
   return (
     <div className='cards'>
-      <h1>Check out Our Featured Projects!</h1>
+      <h1>Home Accessories by Luxton</h1>
       <div className='cards__container'>
         <div className='cards__wrapper'>
           <ul className='cards__items'>
@@ -55,13 +53,13 @@ function Cards() {
             /> */}
            
             {
-              projects.map(pro => {
-                return  <CardItem 
+              accessories.map(pro => {
+                return  <AccessoryCardItem 
                         key={pro.id}
                         src={pro.imageUrl}
                         text={pro.title}
-                        label={pro.homeType}
-                        path={`/project_details/${pro.id}`}
+                        label={pro.category}
+                        path={`/accessory_details/${pro.id}`}
                         />
                      
               })
@@ -74,4 +72,4 @@ function Cards() {
   );
 }
 
-export default Cards;
+export default CardsAccessory;

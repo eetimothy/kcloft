@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
 
-function CardItem(props) {
+function AccessoryCardItem(props) {
   const [user] = useAuthState(auth)
   const [admin, setAdmin] = useState(false)
 
@@ -30,11 +30,11 @@ function CardItem(props) {
             <h5 className='cards__item__text'>{props.text}</h5>
           </div>
         </Link>
-        { user ? <Link to={`/edit_project/${id}`}>edit</Link> : '' }
+        { user ? <Link to={`/edit_accessory/${id}`}>Edit</Link> : '' }
         
       </li>
     </>
   );
 }
 
-export default CardItem;
+export default AccessoryCardItem;
