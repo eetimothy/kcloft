@@ -49,7 +49,7 @@ export default function AddAccessory() {
 
         // fileList.forEach((file) => {
 
-        const storageRef = ref(storage, `/project/${auth.currentUser.uid}/${uuid()}`)
+        const storageRef = ref(storage, `/accessory/${auth.currentUser.uid}/${uuid()}`)
         const uploadTask = uploadBytesResumable(storageRef, file1)
 
         uploadTask.on("state_changed", (snapshot) => {
@@ -105,7 +105,7 @@ export default function AddAccessory() {
                     <label htmlFor="title">Accessory Name</label>
                     <input type="text" name="title" value={title} required onChange={(e) => setTitle(e.target.value)} />
 
-                    <label htmlFor="homeType">Category</label>
+                    <label htmlFor="category">Category</label>
                     <input type="text" name="category" value={category} required onChange={(e) => setCategory(e.target.value)} />
 
                     <label htmlFor="description">Item Description</label>

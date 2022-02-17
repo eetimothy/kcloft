@@ -37,6 +37,7 @@ export const storage = getStorage()
 //collections
 export const projColRef = collection(db, 'projects')
 export const accessoriesColRef = collection(db, 'accessories')
+export const productColRef = collection(db, 'products')
 
 export const signInWithGoogle = async () => {
     try {
