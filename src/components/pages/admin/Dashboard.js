@@ -36,7 +36,7 @@ export default function Dashboard() {
 
         <div className="dashboard_sub_menu">
           <h5><Link to='/projects'>View/ Edit Projects</Link></h5>
-          <h5><Link to='/add_project'>+ Add Project</Link></h5>
+          <h5><Link to='/add_new_project'>+ Add Project</Link></h5>
           <br />
           <h5><Link to="/accessories">View/ Edit Accessories</Link></h5>
           <h5><Link to='/add_accessory'>+ Add Accessories</Link></h5>

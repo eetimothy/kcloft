@@ -23,7 +23,7 @@ export default function ProjectList() {
       snapshot.docs.map((doc) => {
         return proj.push({ ...doc.data(), id: doc.id })
       })
-      console.log(proj)
+      // console.log(proj)
       setProjects(proj)
     })
   }, [])

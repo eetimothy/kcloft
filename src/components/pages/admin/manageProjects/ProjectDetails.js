@@ -9,6 +9,7 @@ import { WhatsappShareButton, WhatsappIcon, FacebookShareButton, FacebookIcon } 
 export default function ProjectDetails() {
     const [id, setId] = useState('')
     const [project, setProject] = useState([])
+    const [images, setImages] = useState([])
     const params = useParams()
 
     const shareUrl = `www.kcloft/project_details/${params.id}`
@@ -21,12 +22,13 @@ export default function ProjectDetails() {
         getDoc(singleDocRef)
             .then((doc) => {
                 setProject(doc.data())
+                setImages(doc.data().imageUrl)
             })
     }, [params, id])
 
     return (
         <div className="details">
-            <img src={project.imageUrl} alt="" />
+            <img src={images[0]} alt="" />
         <div className="box-detail">
             <div className="row">
                 <h2>{project.title}</h2>

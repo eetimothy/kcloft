@@ -23,15 +23,15 @@ function CardItem(props) {
           <figure className='cards__item__pic-wrap' data-category={props.label}>
             <img
               className='cards__item__img'
-              alt='Travel_Image'
-              src={props.src}
+              alt='Home_Image'
+              src={props.src[0]}
             />
           </figure>
           <div className='cards__item__info'>
             <h5 className='cards__item__text'>{props.text}</h5>
           </div>
         </Link>
-        { user ? <Link to={`/edit_project/${id}`}>
+        { user ? <Link to={`/edit_project/${id}`} style={{marginLeft: 10}}>
                          <Button
                             type="submit"
                             variant="contained"

@@ -31,7 +31,7 @@ function AccessoryCardItem(props) {
             <h5 className='cards__item__text'>{props.text}</h5>
           </div>
         </Link>
-        { user ? <Link to={`/edit_accessory/${id}`}>
+        { user ? <Link to={`/edit_accessory/${id}`} style={{marginLeft: 10}}>
         <Button
                             type="submit"
                             variant="contained"

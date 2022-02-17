@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react'
 import { useParams, Link, useNavigate } from "react-router-dom"
 import { useAuthState } from 'react-firebase-hooks/auth'
-import { auth, db } from '../../../../firebase'
+import { auth, db, storage } from '../../../../firebase'
 import { doc, getDoc, updateDoc, deleteDoc } from "firebase/firestore"
 import './EditProject.css'
 import Button from '@mui/material/Button';
@@ -15,6 +15,10 @@ import MenuItem from '@mui/material/MenuItem';
 import Select from '@mui/material/Select';
 import InputLabel from '@mui/material/InputLabel';
 import Input from '@mui/material/Input'
+import DeleteForeverIcon from '@mui/icons-material/Delete';
+import Loading from '../../../utils/loading/Loading'
+import { deleteObject, ref, uploadBytesResumable, getDownloadURL } from 'firebase/storage'
+import uuid from 'uuid-random'
 
 const theme = createTheme();
 
@@ -26,6 +30,14 @@ export default function EditProject() {
     const [homeType, setHomeType] = useState('')
     const [description, setDescription] = useState('')
     const [progress, setProgress] = useState(0)
+    const [images, setImages] = useState([])
+    const [image1, setImage1] = useState('')
+    const [image1Ref, setImage1Ref] = useState('')
+    const [image2, setImage2] = useState('')
+    const [image2Ref, setImage2Ref] = useState('')
+    const [image3, setImage3] = useState('')
+    const [image3Ref, setImage3Ref] = useState('')
+    const [loading, setLoading] = useState(false)
     const navigate = useNavigate()
     
     useEffect(() => {
@@ -34,10 +46,16 @@ export default function EditProject() {
             getDoc(singleDocRef)
                 .then((doc) => {
                     setProject(doc.data())
+                    setImages(doc.data().imageUrl)
+                    // console.log(doc.data().imageUrl[0])
+                    setImage1(doc.data().imageUrl[0])
+                    setImage2(doc.data().imageUrl[1])
+                    setImage3(doc.data().imageUrl[2])
                 })
         }
-    },[params.id])
+    },[params.id, image1, image2, image3, setImage1, setImage2, setImage3])
 
+    
 
     const handleDelete = (e) => {
         e.preventDefault();
@@ -70,6 +88,208 @@ export default function EditProject() {
         alert('Updated Project Details..')
     }
 
+    const deleteImage1 = () => {
+        let picRef = ref(storage, images[0])
+        // console.log(picRef)
+
+        deleteObject(picRef)
+        .then(() => {
+            alert('image 1 deleted successfully')
+            setImage1('')
+        }).then(() => {
+            const docRef = doc(db, 'projects', `${params.id}`)
+
+            updateDoc(docRef, {
+                imageUrl: [
+                    '',
+                    image2 ? images[1] : '',
+                    image3 ? images[2] : ''
+                ]
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const deleteImage2 = () => {
+        let picRef = ref(storage, images[1])
+        // console.log(picRef)
+
+        deleteObject(picRef)
+        .then(() => {
+            alert('image 2 deleted successfully')
+            setImage2('')
+        }).then(() => {
+            const docRef = doc(db, 'projects', `${params.id}`)
+            updateDoc(docRef, {
+                imageUrl: [
+                    image1 ? images[0] : '',
+                    '',
+                    image3 ? images[2] : ''
+                ]
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const deleteImage3 = () => {
+        let picRef = ref(storage, images[2])
+        // console.log(picRef)
+
+        deleteObject(picRef)
+        .then(() => {
+            alert('image 3 deleted successfully')
+            setImage3('')
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+        .then(() => {
+            const docRef = doc(db, 'projects', `${params.id}`)
+            updateDoc(docRef, {
+                imageUrl: [
+                    image1 ? images[0] : '',
+                    image2 ? images[1] : '',
+                    ''
+                ]
+            })
+        })
+        .catch((err) => {
+            console.log(err)
+        })
+    }
+
+    const uploadImage1 = async (e) => {
+        e.preventDefault()
+        const file = e.target.files[0]
+       
+        if(!file) return alert("File does not exist..")
+ 
+        const storageRef = ref(storage, `/project/${auth.currentUser.uid}/${uuid()}`)
+         const uploadTask = uploadBytesResumable(storageRef, file)
+         
+         uploadTask.on("state_changed", (snapshot) => {
+             const prog = Math.round(
+                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+             )
+             setProgress(prog)
+             setLoading(true)
+             // console.log(snapshot, snapshot.ref.fullPath)
+             setImage1Ref(snapshot.ref.fullPath)
+         }, (err) => console.log(err),
+         () => {
+             getDownloadURL(uploadTask.snapshot.ref)
+             .then((url) => {
+                const docRef = doc(db, 'projects', `${params.id}`)
+                updateDoc(docRef, {
+                imageUrl: [
+                    url,
+                    image2 ? image2 : '',
+                    image3 ? image3 : ''
+                ]
+            })
+            setImage1(url)
+            setLoading(false)
+             })
+             .catch((err) => {
+                console.log(err)
+            })
+         })
+     }
+
+     const uploadImage2 = async (e) => {
+        e.preventDefault()
+        const file = e.target.files[0]
+       
+        if(!file) return alert("File does not exist..")
+ 
+        const storageRef = ref(storage, `/project/${auth.currentUser.uid}/${uuid()}`)
+         const uploadTask = uploadBytesResumable(storageRef, file)
+         
+         uploadTask.on("state_changed", (snapshot) => {
+             const prog = Math.round(
+                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+             )
+             setProgress(prog)
+             setLoading(true)
+            //  console.log(snapshot, snapshot.ref.fullPath)
+             setImage2Ref(snapshot.ref.fullPath)
+         }, (err) => console.log(err),
+         () => {
+             getDownloadURL(uploadTask.snapshot.ref)
+             .then((url) => {
+                //  console.log(url)
+                 const docRef = doc(db, 'projects', `${params.id}`)
+                updateDoc(docRef, {
+                imageUrl: [
+                    image1 ? image1 : '',
+                    url,
+                    image3 ? image3 : ''
+                ]
+            })
+            setImage2(url)
+            setLoading(false)
+             })
+             .catch((err) => {
+                 console.log(err)
+             })
+            
+         })
+     }
+
+     const uploadImage3 = async (e) => {
+        e.preventDefault()
+        const file = e.target.files[0]
+       
+        if(!file) return alert("File does not exist..")
+ 
+        const storageRef = ref(storage, `/project/${auth.currentUser.uid}/${uuid()}`)
+         const uploadTask = uploadBytesResumable(storageRef, file)
+         
+         uploadTask.on("state_changed", (snapshot) => {
+             const prog = Math.round(
+                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+             )
+             setProgress(prog)
+             setLoading(true)
+            //  console.log(snapshot, snapshot.ref.fullPath)
+             setImage3Ref(snapshot.ref.fullPath)
+         }, (err) => console.log(err),
+         () => {
+             getDownloadURL(uploadTask.snapshot.ref)
+             .then((url) => {
+                const docRef = doc(db, 'projects', `${params.id}`)
+                updateDoc(docRef, {
+                imageUrl: [
+                    image1 ? image1 : '',
+                    image2 ? image2 : '',
+                    url,
+                ]
+            })
+            setImage2(url)
+            setLoading(false)
+             })
+             .catch((err) => {
+                console.log(err)
+            })
+         })
+     }
+
+    const styleUpload = {
+        display: images[0] ? "block" : "none"
+    }
+
+    const styleUpload2 = {
+        display: images[1] ? "block" : "none"
+    }
+
+    const styleUpload3 = {
+        display: images[2] ? "block" : "none"
+    }
+
     if(!user){
         return (
             <div><Link to='/login'>Please login to continue</Link></div>
@@ -94,11 +314,44 @@ export default function EditProject() {
                     </Typography>
 
                     <Box component="form" onSubmit={handleUpdate} noValidate sx={{ mt: 1 }}>
-           
-                    <img src={project.imageUrl} alt="" width="450" height="300" style={{ marginBottom: '30px' }}/>
-                    
-                        <Input type='file'/>
-                        <h5 style={{ paddingBottom: '10px' }}>Uploaded {progress} %</h5>
+
+                    <div className="img_container">
+                    <h5>Primary Image</h5>
+                    <div className="upload">
+                        
+                            <input type="file" name="file" id="file_up" onChange={uploadImage1}/>
+                            {
+                                loading ? <div id="file_img"><h1><Loading/></h1></div>
+                                    : <div id="file_img" style={styleUpload}>
+                                        <img src={image1 ? image1 : ''} alt="" />
+                                        <span onClick={deleteImage1}><DeleteForeverIcon style={{ color: "#000" }}/></span>
+                                    </div>
+                            }
+                        </div>
+
+                        <div className="upload" style={{ marginTop: 20 }} onChange={uploadImage2}>
+                            <input type="file" name="file" id="file_up"/>
+                            {
+                                loading ? <div id="file_img"><h1><Loading/></h1></div>
+                                    : <div id="file_img" style={styleUpload2}>
+                                        <img src={image2 ? image2 : ''} alt="" />
+                                        <span onClick={deleteImage2}><DeleteForeverIcon style={{ color: "#000" }}/></span>
+                                    </div>
+                            }
+                        </div>
+
+                        <div className="upload" style={{ marginTop: 20 }} onChange={uploadImage3}>
+                            <input type="file" name="file" id="file_up" />
+                            {
+                                loading ? <div id="file_img"><h1><Loading/></h1></div>
+                                    : <div id="file_img" style={styleUpload3}>
+                                        <img src={image3 ? image3 : ''} alt="" />
+                                        <span onClick={deleteImage3}><DeleteForeverIcon style={{ color: "#000" }}/></span>
+                                    </div>
+                            }
+                        </div>
+
+                        </div>
 
                             <TextField
                             margin="normal"

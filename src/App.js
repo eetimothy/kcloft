@@ -19,6 +19,7 @@ import EditAccessory from './components/pages/admin/manageAccessories/EditAccess
 import AddAccessory from './components/pages/admin/manageAccessories/AddAccessory';
 import AddProduct from './components/pages/admin/manageAccessories/AddProduct';
 import Contact from './components/pages/company/Contact';
+import AddNewProject from './components/pages/admin/manageProjects/AddNewProject';
 
 function App() {
 
@@ -36,13 +37,12 @@ function App() {
           <Route exact path='/projects' element={ <ProjectList/> }/>
           <Route exact path='/edit_project/:id' element={ <EditProject/> }/>
           <Route exact path='/add_project' element={ <AddProject/> }/>
-
+          <Route exact path='/add_new_project' element={ <AddNewProject/> }/>
           <Route exact path='/accessory_details/:id' element={ <AccessoryDetails/> }/>
           <Route exact path='/accessories' element={ <AccessoryList/> }/>
           <Route exact path='/edit_accessory/:id' element={ <EditAccessory/> }/>
           <Route exact path='/add_accessory' element={ <AddAccessory/> }/>
           <Route exact path='/add_product' element={ <AddProduct/> }/>
-
           <Route exact path='/contact' element={ <Contact/> }/>
         </Routes>
       </Router>

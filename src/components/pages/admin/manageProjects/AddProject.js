@@ -78,9 +78,6 @@ export default function AddProject() {
                         handleSubmitDetails(url)
                     })
             })
-        // })
-
-
     }
 
     const handleSubmitDetails = async (url) => {
@@ -109,8 +106,6 @@ export default function AddProject() {
                         alignItems: 'center',
                     }}
                 >
-
-
                     <Typography component="h1" variant="h5">
                         Add Project
                     </Typography>
