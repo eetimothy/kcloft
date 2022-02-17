@@ -1,14 +1,28 @@
-import React, { useState } from 'react'
+import { useState } from 'react'
+import * as React from 'react';
 import { useAuthState } from "react-firebase-hooks/auth";
 import './AddProject.css'
 import {
-    addDoc, doc, deleteDoc, serverTimestamp,
-    updateDoc
+    addDoc,  serverTimestamp
+   
 } from 'firebase/firestore'
 import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
 import { projColRef, storage, auth } from '../../../../firebase'
 import { Link } from 'react-router-dom';
 import uuid from 'uuid-random'
+import Button from '@mui/material/Button';
+import CssBaseline from '@mui/material/CssBaseline';
+import TextField from '@mui/material/TextField';
+import Box from '@mui/material/Box';
+import Typography from '@mui/material/Typography';
+import Container from '@mui/material/Container';
+import { createTheme, ThemeProvider } from '@mui/material/styles';
+import MenuItem from '@mui/material/MenuItem';
+import Select from '@mui/material/Select';
+import InputLabel from '@mui/material/InputLabel';
+import Input from '@mui/material/Input'
+
+const theme = createTheme();
 
 export default function AddProject() {
     const [user] = useAuthState(auth)
@@ -82,38 +96,82 @@ export default function AddProject() {
         })
     }
 
-    if(!user) {
+    if (!user) {
         return <Link to='/login'> Please Login to continue</Link>
     }
 
     return (
-        <div className="form_container">
-           
-            <div className="add_form">
-            
-                <form onSubmit={handleUpload}>
-                    <h2>Add Project</h2>
-                    <input type="file" />
-                    <h5 style={{ paddingBottom: '10px' }}>Uploaded {progress} %</h5>
-                    {/* 
-                <input type="file"/>
-                <h5 style={{ paddingBottom: '10px' }}>Uploaded {progress} %</h5>
+        <ThemeProvider theme={theme}>
+            <Container component="main" maxWidth="xs">
+                <CssBaseline />
+                <Box
+                    sx={{
+                        marginTop: 8,
+                        display: 'flex',
+                        flexDirection: 'column',
+                        alignItems: 'center',
+                    }}
+                >
 
-                <input type="file"/>
-                <h5 style={{ paddingBottom: '10px' }}>Uploaded {progress} %</h5> */}
 
-                    <label htmlFor="title">Title</label>
-                    <input type="text" name="title" value={title} required onChange={(e) => setTitle(e.target.value)} />
+                    <Typography component="h1" variant="h5">
+                        Add Project
+                    </Typography>
 
-                    <label htmlFor="homeType">Home Type</label>
-                    <input type="text" name="homeType" value={homeType} required onChange={(e) => setHomeType(e.target.value)} />
+                    <Box component="form" onSubmit={handleUpload} noValidate sx={{ mt: 1 }}>
 
-                    <label htmlFor="description">Project Description</label>
-                    <textarea type="text" name="description" value={description} rows="10" columns="8" required onChange={(e) => setDescription(e.target.value)} />
+                        <Input type='file'/>
+                        <h5 style={{ paddingBottom: '10px' }}>Uploaded {progress} %</h5>
 
-                    <button type="submit" style={{ marginTop: 10, backgroundColor: "black", color: 'white', cursor: 'pointer' }}>Submit</button>
-                </form>
-            </div>
-        </div>
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Project Title"
+                            name="title"
+                            type="text"
+                            autoComplete="title"
+                            onChange={(e) => setTitle(e.target.value)}
+                            autoFocus
+                        />
+
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Home Type"
+                            name="homeType"
+                            type="text"
+                            autoComplete="homeType"
+                            onChange={(e) => setHomeType(e.target.value)}
+                        />
+
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            multiline
+                            rows={5}
+                            label="Project Description"
+                            name="description"
+                            type="text"
+                            autoComplete="description"
+                            onChange={(e) => setDescription(e.target.value)}
+                        />
+
+                        <Button
+                            type="submit"
+                            fullWidth
+                            variant="contained"
+                            sx={{ mt: 3, mb: 2 }}
+                            style={{ backgroundColor: '#000', borderRadius: 15 }}
+                        >
+                            Submit
+                        </Button>
+
+                    </Box>
+                </Box>
+            </Container>
+        </ThemeProvider>
     )
 }
