@@ -62,8 +62,25 @@ export default function EditProject() {
         const docRef = doc(db, 'projects', `${params.id}`)
         deleteDoc(docRef)
             .then(() => {
+                if(images[0]){
+                    let picRef1 = ref(storage, images[0])
+                    deleteObject(picRef1)
+                }
+                if(images[1]){
+                    let picRef2 = ref(storage, images[1])
+                    deleteObject(picRef2)
+                }
+                if(images[2]){
+                    let picRef3 = ref(storage, images[2])
+                    deleteObject(picRef3)
+                }
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+            .then(() => {
                 alert('document deleted')
-                navigate("/projects")
+                    navigate("/projects")
             })
     }
 
