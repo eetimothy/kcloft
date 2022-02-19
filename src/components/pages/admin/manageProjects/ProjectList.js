@@ -37,33 +37,6 @@ export default function ProjectList() {
       </Typography>
       <div className='list__wrapper'>
         <ul>
-
-
-          {/* <CardItem
-                  src='images/img-9.jpg'
-                  text='Muji Themed 5 Room BTO At Bidadari'
-                  label='HDB BTO'
-                  path='/services'
-                />
-                <CardItem
-                  src='images/img-2.jpg'
-                  text='Modern Luxe Theme - Tapestry @ Tampines '
-                  label='Condos'
-                  path='/services'
-                />      
-                <CardItem
-                  src='images/img-3.jpg'
-                  text='Maximalist Design Overhaul (Compassvale)'
-                  label='HDB Resale'
-                  path='/services'
-                />
-                <CardItem
-                  src='images/img-4.jpg'
-                  text='Balinese Spa Concept at Binjai Park'
-                  label='Landed'
-                  path='/products'
-                /> */}
-
           {
             projects.map(pro => {
               return <CardItem

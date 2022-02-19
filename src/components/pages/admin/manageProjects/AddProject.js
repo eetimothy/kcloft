@@ -30,35 +30,13 @@ export default function AddProject() {
 
     const handleUpload = async (e) => {
         e.preventDefault()
-        // const fileList = []
-        // const file = e.target[0].files[0]
         const file1 = e.target[0].files[0]
-        // const file2 = e.target[1].files[0]
-        // const file3 = e.target[2].files[0]
-        // console.log(file1, file2, file3)
 
-        // if(file1 && !file2 && !file3){
-        //     fileList.push(file1)
-        // } else if (file1 && file2 && !file3){
-        //     fileList.push(file1, file2)
-        // } else if (file1 && file2 && file3) {
-        //     fileList.push(file1, file2, file3)
-        // }
-
-        // console.log(fileList)
-
-        // fileList.forEach((file) => {
-        //     console.log(file)
-        // })
         uploadToFirebaseStorage(file1)
     }
 
     const uploadToFirebaseStorage = (file1) => {
         if (!file1) return alert('Please include an image.');
-
-
-
-        // fileList.forEach((file) => {
 
         const storageRef = ref(storage, `/project/${auth.currentUser.uid}/${uuid()}`)
         const uploadTask = uploadBytesResumable(storageRef, file1)

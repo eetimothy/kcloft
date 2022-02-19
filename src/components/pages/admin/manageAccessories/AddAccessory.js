@@ -3,11 +3,11 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import '../manageProjects/AddProject.css'
 import {
     addDoc, serverTimestamp
-    
+
 } from 'firebase/firestore'
-import { getDownloadURL, ref, uploadBytesResumable } from "firebase/storage"
+import { getDownloadURL, ref, uploadBytesResumable, deleteObject } from "firebase/storage"
 import { accessoriesColRef, storage, auth } from '../../../../firebase'
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import uuid from 'uuid-random'
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
@@ -16,10 +16,8 @@ import Box from '@mui/material/Box';
 import Typography from '@mui/material/Typography';
 import Container from '@mui/material/Container';
 import { createTheme, ThemeProvider } from '@mui/material/styles';
-import MenuItem from '@mui/material/MenuItem';
-import Select from '@mui/material/Select';
-import InputLabel from '@mui/material/InputLabel';
-import Input from '@mui/material/Input'
+import DeleteForeverIcon from '@mui/icons-material/Delete';
+import Loading from '../../../utils/loading/Loading'
 
 const theme = createTheme();
 
@@ -27,75 +25,171 @@ export default function AddAccessory() {
     const [user] = useAuthState(auth)
     const [title, setTitle] = useState('')
     const [category, setCategory] = useState('')
+    const [price, setPrice] = useState('')
     const [description, setDescription] = useState('')
     const [progress, setProgress] = useState(0)
+    const [image1, setImage1] = useState('')
+    const [image1Ref, setImage1Ref] = useState('')
+    const [image2, setImage2] = useState('')
+    const [image2Ref, setImage2Ref] = useState('')
+    const [image3, setImage3] = useState('')
+    const [image3Ref, setImage3Ref] = useState('')
+    const [loading, setLoading] = useState(false)
+    const navigate = useNavigate()
 
-    const handleUpload = async (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        // const fileList = []
-        // const file = e.target[0].files[0]
-        const file1 = e.target[0].files[0]
-        // const file2 = e.target[1].files[0]
-        // const file3 = e.target[2].files[0]
-        // console.log(file1, file2, file3)
+        if (!image1 && !image2 && !image3)
+            return alert('Please upload at least 1 photo.')
 
-        // if(file1 && !file2 && !file3){
-        //     fileList.push(file1)
-        // } else if (file1 && file2 && !file3){
-        //     fileList.push(file1, file2)
-        // } else if (file1 && file2 && file3) {
-        //     fileList.push(file1, file2, file3)
-        // }
-
-        // console.log(fileList)
-
-        // fileList.forEach((file) => {
-        //     console.log(file)
-        // })
-        uploadToFirebaseStorage(file1)
+        await addDoc(accessoriesColRef, {
+            title,
+            price,
+            category,
+            description,
+            imageUrl: [image1, image2, image3],
+            createdAt: serverTimestamp()
+        })
+        alert('New Product added: ', title)
+        navigate("/accessories")
     }
 
-    const uploadToFirebaseStorage = (file1) => {
-        if (!file1) return alert('Please include an image.');
+    const uploadImage1 = async (e) => {
+        e.preventDefault()
+        const file = e.target.files[0]
 
-
-
-        // fileList.forEach((file) => {
+        if (!file) return alert("File does not exist..")
 
         const storageRef = ref(storage, `/accessory/${auth.currentUser.uid}/${uuid()}`)
-        const uploadTask = uploadBytesResumable(storageRef, file1)
+        const uploadTask = uploadBytesResumable(storageRef, file)
 
         uploadTask.on("state_changed", (snapshot) => {
             const prog = Math.round(
                 (snapshot.bytesTransferred / snapshot.totalBytes) * 100
             )
             setProgress(prog)
-            console.log(snapshot)
+            setLoading(true)
+            // console.log(snapshot, snapshot.ref.fullPath)
+            setImage1Ref(snapshot.ref.fullPath)
         }, (err) => console.log(err),
-
             () => {
                 getDownloadURL(uploadTask.snapshot.ref)
                     .then((url) => {
-                        console.log(url)
-                        handleSubmitDetails(url)
+                        // console.log(url)
+                        setImage1(url)
+                        // console.log(image1)
+                        setLoading(false)
                     })
             })
-        // })
-
-
     }
 
-    const handleSubmitDetails = async (url) => {
-        await addDoc(accessoriesColRef, {
-            title,
-            category,
-            description,
-            imageUrl: url,
-            createdAt: serverTimestamp()
-        })
+    const uploadImage2 = async (e) => {
+        e.preventDefault()
+        const file = e.target.files[0]
+
+        if (!file) return alert("File does not exist..")
+
+        const storageRef = ref(storage, `/accessory/${auth.currentUser.uid}/${uuid()}`)
+        const uploadTask = uploadBytesResumable(storageRef, file)
+
+        uploadTask.on("state_changed", (snapshot) => {
+            const prog = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            )
+            setProgress(prog)
+            setLoading(true)
+            //  console.log(snapshot, snapshot.ref.fullPath)
+            setImage2Ref(snapshot.ref.fullPath)
+        }, (err) => console.log(err),
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref)
+                    .then((url) => {
+                        //  console.log(url)
+                        setImage2(url)
+                        //  console.log(image2)
+                        setLoading(false)
+                    })
+            })
     }
 
-    if(!user) {
+    const uploadImage3 = async (e) => {
+        e.preventDefault()
+        const file = e.target.files[0]
+
+        if (!file) return alert("File does not exist..")
+
+        const storageRef = ref(storage, `/accessory/${auth.currentUser.uid}/${uuid()}`)
+        const uploadTask = uploadBytesResumable(storageRef, file)
+
+        uploadTask.on("state_changed", (snapshot) => {
+            const prog = Math.round(
+                (snapshot.bytesTransferred / snapshot.totalBytes) * 100
+            )
+            setProgress(prog)
+            setLoading(true)
+            //  console.log(snapshot, snapshot.ref.fullPath)
+            setImage3Ref(snapshot.ref.fullPath)
+        }, (err) => console.log(err),
+            () => {
+                getDownloadURL(uploadTask.snapshot.ref)
+                    .then((url) => {
+                        //  console.log(url)
+                        setImage3(url)
+                        //  console.log(image3)
+                        setLoading(false)
+                    })
+            })
+    }
+
+    const deleteImage1 = () => {
+        const imgRef = ref(storage, image1Ref)
+        deleteObject(imgRef)
+            .then(() => {
+                alert('image deleted..')
+                setImage1('')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    const deleteImage2 = () => {
+        const imgRef = ref(storage, image2Ref)
+        deleteObject(imgRef)
+            .then(() => {
+                alert('image 2 deleted..')
+                setImage2('')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    const deleteImage3 = () => {
+        const imgRef = ref(storage, image3Ref)
+        deleteObject(imgRef)
+            .then(() => {
+                alert('image 3 deleted..')
+                setImage3('')
+            })
+            .catch((err) => {
+                console.log(err)
+            })
+    }
+
+    const styleUpload = {
+        display: image1 ? "block" : "none"
+    }
+
+    const styleUpload2 = {
+        display: image2 ? "block" : "none"
+    }
+
+    const styleUpload3 = {
+        display: image3 ? "block" : "none"
+    }
+
+    if (!user) {
         return <Link to='/login'> Please Login to continue</Link>
     }
 
@@ -117,13 +211,48 @@ export default function AddAccessory() {
                         Add Product
                     </Typography>
 
-                    <Box component="form" onSubmit={handleUpload} noValidate sx={{ mt: 1 }}>
+                    <Box component="form" onSubmit={handleSubmit} noValidate sx={{ mt: 1 }}>
 
-                        <Input type='file'/>
-                        <h5 style={{ paddingBottom: '10px' }}>Uploaded {progress} %</h5>
+                        <div className="img_container">
 
-                   
-                    <TextField
+                            <h5>Primary Image</h5>
+                            <div className="upload">
+
+                                <input type="file" name="file" id="file_up" onChange={uploadImage1} />
+                                {
+                                    loading ? <div id="file_img"><h1><Loading /></h1></div>
+                                        : <div id="file_img" style={styleUpload}>
+                                            <img src={image1 ? image1 : ''} alt="" />
+                                            <span onClick={deleteImage1}><DeleteForeverIcon style={{ color: "#000" }} /></span>
+                                        </div>
+                                }
+                            </div>
+
+                            <div className="upload" style={{ marginTop: 20 }}>
+                                <input type="file" name="file" id="file_up" onChange={uploadImage2} />
+                                {
+                                    loading ? <div id="file_img"><h1><Loading /></h1></div>
+                                        : <div id="file_img" style={styleUpload2}>
+                                            <img src={image2 ? image2 : ''} alt="" />
+                                            <span onClick={deleteImage2}><DeleteForeverIcon style={{ color: "#000" }} /></span>
+                                        </div>
+                                }
+                            </div>
+
+                            <div className="upload" style={{ marginTop: 20 }}>
+                                <input type="file" name="file" id="file_up" onChange={uploadImage3} />
+                                {
+                                    loading ? <div id="file_img"><h1><Loading /></h1></div>
+                                        : <div id="file_img" style={styleUpload3}>
+                                            <img src={image3 ? image3 : ''} alt="" />
+                                            <span onClick={deleteImage3}><DeleteForeverIcon style={{ color: "#000" }} /></span>
+                                        </div>
+                                }
+                            </div>
+
+                        </div>
+
+                        <TextField
                             margin="normal"
                             required
                             fullWidth
@@ -136,7 +265,20 @@ export default function AddAccessory() {
                             autoFocus
                         />
 
-                            <TextField
+                        <TextField
+                            margin="normal"
+                            required
+                            fullWidth
+                            label="Price"
+                            name="price"
+                            type="number"
+                            autoComplete="price"
+                            value={price}
+                            onChange={(e) => setPrice(e.target.value)}
+                            autoFocus
+                        />
+
+                        <TextField
                             margin="normal"
                             required
                             fullWidth
@@ -149,7 +291,7 @@ export default function AddAccessory() {
                             autoFocus
                         />
 
-                         <TextField
+                        <TextField
                             margin="normal"
                             required
                             fullWidth
@@ -161,9 +303,9 @@ export default function AddAccessory() {
                             autoComplete="description"
                             value={description}
                             onChange={(e) => setDescription(e.target.value)}
-                          />
+                        />
 
-                    <Button
+                        <Button
                             type="submit"
                             fullWidth
                             variant="contained"

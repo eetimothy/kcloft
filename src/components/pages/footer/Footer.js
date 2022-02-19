@@ -41,6 +41,8 @@ export default function Footer() {
                     <h5 style={{ marginBottom: '15px' }}>Company</h5>
                     <Link to="/about"><p>About</p></Link>
                     <Link to="/contact"><p>Contact us</p></Link>
+                    <p></p>
+                    <p></p>
                 </div>
 
 
@@ -50,7 +52,7 @@ export default function Footer() {
                     <Link to="/accessories"><p>Home Accessories</p></Link>
                     <p></p>
                     <p></p>
-                    <p></p>
+                    
                 </div>
 
                 <div className="menu-footer" style={{ paddingLeft: '100px', display: 'flex', flex: '1', justifyContent: 'space-between', flexDirection: 'column', alignItems: 'left' }}>
@@ -58,13 +60,14 @@ export default function Footer() {
                     <Link to="/dashboard"><p>Admin Dashboard</p></Link>
                     <Link to="/login"><p>Admin Log in</p></Link>
                     <p></p>
+                    <p></p>
                 </div>
 
             </div>
 
             <Divider style={{ marginTop: '30px' }} />
 
-            <div className="div footer-comments-wrapper" style={{ display: 'flex', marginTop: '10px', justifyContent: 'space-between' }}>
+            <div className="div footer-comments-wrapper" style={{ display: 'flex', marginTop: '10px', justifyContent: 'space-between', paddingLeft: 50, paddingRight: 90 }}>
 
                 <div className="div footer-comments" style={{ display: 'flex' }}>
                     <div>
@@ -85,15 +88,7 @@ export default function Footer() {
                             <InstagramIcon style={{ color: '#263238' }} />
                         </IconButton>
                     </div>
-                    <div style={{ paddingLeft: '20px' }}>
-                        <IconButton
-                            size="small"
-                            edge="end"
-                            aria-label="twitter"
-                        >
-                            <TwitterIcon style={{ color: '#263238' }} />
-                        </IconButton>
-                    </div>
+                    
                     <div style={{ paddingLeft: '20px' }}>
                         <IconButton
                             size="small"
