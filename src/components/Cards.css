@@ -1,10 +1,9 @@
 .cards {
     padding: 4rem;
     background: #fff;
-   
   }
 
-  h1 {
+  h1, h2 {
     text-align: center;
   }
   
@@ -15,13 +14,14 @@
     max-width: 1120px;
     width: 90%;
     margin: 0 auto;
-  
+    
   }
   
   .cards__wrapper {
     position: relative;
     margin: 50px 0 45px;
-   
+    height: 250px;
+    
   }
   
   .cards__items {
@@ -52,6 +52,7 @@
     width: 100%;
     padding-top: 67%;
     overflow: hidden;
+    height: 400px;
   }
   
   .fade-img {
@@ -98,7 +99,7 @@
   
   .cards__item__text {
     color: #252e48;
-    font-size: 18px;
+    font-size: 15px;
     line-height: 24px;
   }
   
@@ -119,3 +120,9 @@
       margin-bottom: 2rem;
     }
   }
+
+
+.cards__wrapper > .slick-slider{
+  width: 900px;
+  height: 450px;
+}

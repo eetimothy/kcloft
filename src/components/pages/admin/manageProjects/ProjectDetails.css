@@ -49,13 +49,13 @@
 /* React slick slider */
 
 
-.slick-slider{
-    width: 500px;
-    height: 550px;
+.details_slider > .slick-slider{
+    width: 400px;
+    height: 450px;
 }
 
 .custom-indicator{
-    bottom: -65px;
+    bottom: -150px;
 }
 
 .custom-indicator li {

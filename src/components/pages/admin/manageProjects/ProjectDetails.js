@@ -8,7 +8,6 @@ import { WhatsappShareButton, WhatsappIcon, FacebookShareButton, FacebookIcon } 
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css"
 import "slick-carousel/slick/slick-theme.css"
-import uuid from 'uuid-random'
 
 export default function ProjectDetails() {
     const [id, setId] = useState('')
@@ -19,7 +18,6 @@ export default function ProjectDetails() {
     const settings = {
         dots: true,
         infinite: true,
-        
         width: 600,
         slidesToShow: 1,
         variableWidth: true,
@@ -46,14 +44,15 @@ export default function ProjectDetails() {
             })
     }, [params, id])
 
+   
 
     return (
         <div className="details">
 
-            <div style={{ marginLeft: 100, marginRight: 100, marginBottom: 50 }}>
+            <div className="details_slider" style={{ marginLeft: 100, marginRight: 100, marginBottom: 50 }}>
                 <Slider {...settings}>
                     {images.map(item => (
-                        <div key={item.uuid} style={{ width: 600 }}>
+                        <div key={item} style={{ width: 600 }}>
                             <img src={item} alt="" style={{ width: '100%', height: '500px'}} />
                         </div>
                     ))}

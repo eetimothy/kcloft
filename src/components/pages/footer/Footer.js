@@ -67,10 +67,11 @@ export default function Footer() {
 
             <Divider style={{ marginTop: '30px' }} />
 
-            <div className="div footer-comments-wrapper" style={{ display: 'flex', marginTop: '10px', justifyContent: 'space-between', paddingLeft: 50, paddingRight: 90 }}>
+            <div className="div footer-comments-wrapper" style={{ display: 'flex', marginTop: '10px', justifyContent: 'space-between', paddingLeft: 50, paddingRight: 90, flexWrap: 'wrap' }}>
 
                 <div className="div footer-comments" style={{ display: 'flex' }}>
                     <div>
+                        <a href="https://www.facebook.com/pages/category/Interior-Design-Studio/KC-Loft-Interior-Pte-Ltd-270842576899063/">
                         <IconButton
                             size="small"
                             edge="end"
@@ -78,8 +79,10 @@ export default function Footer() {
                         >
                             <FacebookIcon style={{ color: '#263238' }} />
                         </IconButton>
+                        </a>
                     </div>
                     <div style={{ paddingLeft: '20px' }}>
+                        <a href="https://www.tiktok.com/@kcloftinterior">
                         <IconButton
                             size="small"
                             edge="end"
@@ -87,9 +90,11 @@ export default function Footer() {
                         >
                             <InstagramIcon style={{ color: '#263238' }} />
                         </IconButton>
+                        </a>
                     </div>
                     
                     <div style={{ paddingLeft: '20px' }}>
+                        <a href="https://wa.me/84881107">
                         <IconButton
                             size="small"
                             edge="end"
@@ -97,6 +102,7 @@ export default function Footer() {
                         >
                             <WhatsAppIcon style={{ color: '#263238' }} />
                         </IconButton>
+                        </a>
                     </div>
 
                 </div>

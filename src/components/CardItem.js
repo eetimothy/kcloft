@@ -4,6 +4,7 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import { auth } from '../firebase';
 import Button from '@mui/material/Button';
 
+
 function CardItem(props) {
   const [user] = useAuthState(auth)
   const [admin, setAdmin] = useState(false)
@@ -18,7 +19,7 @@ function CardItem(props) {
 
   return (
     <>
-      <li className='cards__item' style={{minWidth: "300px"}}>
+      <li className='cards__item' style={{ minWidth: "180px", maxWidth: '300px', height: 300 }}>
         <Link className='cards__item__link' to={props.path}>
           <figure className='cards__item__pic-wrap' data-category={props.label}>
             <img
