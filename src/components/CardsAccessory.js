@@ -57,7 +57,7 @@ function CardsAccessory() {
 
 return (
   <div className='cards'>
-    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 50px', flexWrap: 'wrap' }}>
+    <div style={{ display: 'flex', justifyContent: 'space-between', padding: '0 50px', flexWrap: 'wrap', marginTop: -50 }}>
       <h2>Home Accessories</h2>
       <Hidden smDown={true}>
       <div style={{ display: 'flex'}}>

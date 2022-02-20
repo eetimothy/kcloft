@@ -33,7 +33,7 @@ export default function Footer() {
             <div className="footer-wrapper" style={{ display: 'flex', paddingTop: '50px', paddingLeft: '50px' }}>
            
                 <div className="footer-logo" style={{ display: 'flex', flex: '1'}}>
-                    <Link to="/"><img src={Logo} alt="" width="250px" /></Link>
+                <a href="https://www.tiktok.com/@kcloftinterior"><img src={Logo} alt="" width="250px" /></a>
                 </div>
 
                 <div className="menu-footer" style={{ paddingLeft: '120px', display: 'flex', flex: '1', justifyContent: 'space-between', flexDirection: 'column', alignItems: 'left' }}>
