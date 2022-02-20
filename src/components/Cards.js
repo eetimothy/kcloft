@@ -114,7 +114,7 @@ function Cards() {
           </Slider>
         </div>
 
-        <Hidden mdUp={true}>
+        <Hidden smUp={true}>
         <div style={{ display: 'flex', marginLeft: 90, marginTop: -30 }}>
           <div 
           style={{ 

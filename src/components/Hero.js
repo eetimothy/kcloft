@@ -8,7 +8,7 @@ function Hero() {
     return (
         <div className="hero-container">
             {/* autoplay loop */}
-            <video src='/videos/video-2.mp4' autoplay loop muted style={{height: '70vh'}}/>
+            <video src='/videos/video-2.mp4' autoPlay loop muted style={{height: '70vh'}}/>
             <h1>DREAM HOME AWAITS</h1>
             <p>What are you waiting for?</p>
             <div className="hero-btns">
