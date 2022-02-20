@@ -25,7 +25,7 @@ export default function AccessoryDetails() {
         centerPadding: '10px',
         rows: 1,
         autoplay: true,
-        autoplaySpeed: 4000,
+        autoplaySpeed: 5000,
         dotsClass: "slick-dots custom-indicator",
     }
 
@@ -46,11 +46,11 @@ export default function AccessoryDetails() {
 
     return (
         <div className="details">
-           <div style={{ marginLeft: 100, marginRight: 100, marginBottom: 50 }}>
+           <div className="details_slider" style={{ marginLeft: 100, marginRight: 100, marginBottom: 30 }}>
                 <Slider {...settings}>
                     {images.map(item => (
                         <div key={item} style={{ width: 600 }}>
-                            <img src={item} alt="" style={{ width: '100%', height: '500px'}} />
+                            <img src={item} alt="" style={{ width: '500px', height: '400px', objectFit: 'cover', overflow: 'hidden'}} />
                         </div>
                     ))}
                 </Slider>

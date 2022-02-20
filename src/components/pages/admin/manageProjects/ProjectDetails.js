@@ -49,11 +49,11 @@ export default function ProjectDetails() {
     return (
         <div className="details">
 
-            <div className="details_slider" style={{ marginLeft: 100, marginRight: 100, marginBottom: 50 }}>
+            <div className="details_slider" style={{ marginLeft: 100, marginRight: 100, marginBottom: 30 }}>
                 <Slider {...settings}>
                     {images.map(item => (
                         <div key={item} style={{ width: 600 }}>
-                            <img src={item} alt="" style={{ width: '100%', height: '500px'}} />
+                            <img src={item} alt="" style={{ width: '500px', height: '400px', objectFit: 'cover', overflow: 'hidden'}} />
                         </div>
                     ))}
                 </Slider>
