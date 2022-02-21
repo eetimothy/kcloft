@@ -3,7 +3,6 @@ import { useEffect, useState } from "react"
 import { useParams } from "react-router-dom"
 import { db } from "../../../../firebase"
 import './ProjectDetails.css'
-import { Link } from 'react-router-dom'
 import { WhatsappShareButton, WhatsappIcon, FacebookShareButton, FacebookIcon } from 'react-share'
 import Slider from 'react-slick'
 import "slick-carousel/slick/slick.css"

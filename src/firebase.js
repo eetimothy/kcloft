@@ -16,9 +16,6 @@ import {
     collection,
     where,
     addDoc,
-    onSnapshot,
-    doc,
-    getDoc
 } from 'firebase/firestore'
 
 import { getStorage } from 'firebase/storage'

@@ -6,7 +6,7 @@ import { auth, logout } from '../firebase'
 import './Navbar.css';
 
 function Navbar() {
-  const [user, loading, error] = useAuthState(auth);
+  const [user] = useAuthState(auth);
   const [click, setClick] = useState(false);
   const [button, setButton] = useState(true);
 
@@ -97,8 +97,7 @@ function Navbar() {
             }
 
             <li>
-              <Link
-                to='/contact'
+              <Link to='/contact'
                 className='nav-links-mobile'
                 onClick={closeMobileMenu}
               >

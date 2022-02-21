@@ -1,5 +1,5 @@
 import React from 'react';
-import { Button } from './Button';
+import { Button, ProjectButton } from './Button';
 import { Link } from 'react-router-dom'
 import './Hero.css'
 import '../App.css'
@@ -23,13 +23,13 @@ function Hero() {
                     </Link>
 
                     <Link to="/projects">
-                    <Button 
+                    <ProjectButton 
                 className='btns' 
                 buttonStyle='btn--primary'
                 buttonSize='btn--large'
                 >
                     VIEW PROJECTS <i className='far fa-play-circle' />
-                    </Button>
+                    </ProjectButton>
                     </Link>
             </div>
         </div>

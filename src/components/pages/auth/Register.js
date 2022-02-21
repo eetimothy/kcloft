@@ -13,13 +13,13 @@ export default function RegisterUser() {
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
     const [displayName, setDisplayName] = useState("");
-    const [user, loading, error] = useAuthState(auth);
+    const [user, loading] = useAuthState(auth);
     const history = useNavigate();
 
     useEffect(() => {
         if (loading) return;
         if (user) history("/dashboard");
-      }, [user, loading]);
+      }, [user, loading, history]);
 
     const register = () => {
         if (!displayName) alert("Please enter name");
